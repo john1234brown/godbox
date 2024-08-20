@@ -1,19 +1,14 @@
 {
-  "name": "johnnykins-godbox",
-  "version": "0.0.1",
-  "description": "Simple Isolation and Path Traversal Protection Express Server Hosting Module!",
-  "main": "index.js",
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "keywords": [
-    "Path-Traversal-Security",
-    "XSS-Security",
-    "Express",
-    "Security"
-  ],
-  "author": "Johnathan Edward Brown",
-  "license": "GPL-3.0",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
   }
