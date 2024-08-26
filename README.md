@@ -11,7 +11,7 @@
 **For Seperate environment modes such as production and development modes!**
 
 - The isolated VM Express Webserver hosting solution for nodeJS.
-- Without The Need for Obfuscation Due to the unique Fact and Nature of Pure Merkle Verification setup with Proper scopage to not pose a backdoor from webserver side to stop it. Like my johnnykins-blackbox and johnnykins-blackbox-dev setups!
+- This utilizes Javascript-Obfuscator to obfuscate your server code before executing it in the vm context of nodeJs.
 - This utilizes a VM Context and A Child Process with its own environment variables Setup!
 - This Utilizes a Recreation tactic like how a pheonix dies and rebirths itself very similar thing here utilizings a merkle tree verification setup!
 - So when Something is found wrong with the server files it will stop it and restart it! And Properly Resetup the files and remove the infected directory!
@@ -57,6 +57,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Support UR
 - Make folder called Godbox-example
 - cd into godbox-example
 - run npm init -y
+- npm install godbox
 
 ### Step 2
 
@@ -120,7 +121,7 @@ process.child.on(GLOBALLY.getGlobalString(), ()=>{
 - make a index.js file and put this code inside it!
 
 ```js
-const { GodBox } = require('./index.js');
+const { GodBox } = require('godbox');
 const fs = require('node:fs');
 try {
 new GodBox('./server.js', './test/public', 60000, 1000, false, true, false, {log: console.log});
