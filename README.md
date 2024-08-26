@@ -1,5 +1,12 @@
 # JohnnyKins-GodBox Also Could be named Pheonix Box
 
+## Videos
+
+- [Benchmark Run and Tests New Optimizations 1.0.7 August 25, 2024](https://screencast.apps.chrome/1XSnJ0kfhdTFx-E9mqHdruH_vHsqHvgCa?createdTime=2024-08-25T20%3A17%3A26.124Z);
+- [Introduction Bare With me I'm not the best Presentor practices makes perfect though..](https://screencast.apps.chrome/1Xp_kxLh6Imv7m0uYv1miatwW-oi_W_FP?createdTime=2024-08-25T20%3A26%3A26.131Z)
+- [New Release version 1.0.9 August 26, 2024](https://screencast.apps.chrome/1YI3-UKIyZoJMF-duni3YwwfsyzrhU-d0?createdTime=2024-08-26T06%3A04%3A15.204Z)
+- [Video Showcasing Webserver Exposed From Godbox Setup!](https://screencast.apps.chrome/1YJlVrpiFboQWF-GFZeO7ldFPtH9YONKS?createdTime=2024-08-26T06%3A23%3A46.087Z)
+
 **Warning Godbox-dev is now deprecated this godbox utility has it all in one design pattern solution now!**
 **For Seperate environment modes such as production and development modes!**
 
@@ -42,6 +49,100 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Support UR
 
 - Due to the Potential of it conflicting with the sole purpose of being a fail safe process for your webserver is really what this utility is utilizing merkle tree verification techniques in private function in a class setup to properly keep out of context!
 
+## How To Use
+
+### Step 1
+
+- Make sure to Have NodeJS installed!
+- Make folder called Godbox-example
+- cd into godbox-example
+- run npm init -y
+
+### Step 2
+
+- make a folder called public and inside of it make a index.html
+- Go into index.html and use this!
+- **index.html**
+
+```html
+<body>
+    <h1>Hello World From Johnnykins GodBox</h1>
+</body>
+
+<footer>Author: Johnathan Edward Brown :D</footer>
+```
+
+### Step 3
+
+- Go back to the folder Godbox-example!
+- make a server.js file!
+- Go into server.js and use this!
+- **server.js**
+
+```js
+const express = require('express');
+const app = express();
+const isExpressSymbol = GLOBALLY.getGlobalSymbol(); //This is a safety type check setup!
+app[isExpressSymbol] = true; //Which is required to be set to true to pass it to the setExpressApp(app, Globally);
+GLOBALLY.setExpressApp(app, GLOBALLY);
+// How to properly setup and utilize the pandoraExpress Communication channel!
+const pandoraExpressSymbol = pandoraWall.getGlobalSymbol();
+app[pandoraExpressSymbol] = true; //Which is required to be set true to setup the pandoraWalls runtime protection middleware!
+pandoraWall.setExpress(app, pandoraWall); //Which is required to properly secure the pandoraWall with the current running server in context!
+
+//GLOBALLY.setExpressApp(app, GLOBALLY);//Call Twice to test Express lock out! This Prevents double calling this after its been set!
+//Make sure to ^ Set your expressApp via the globally to attach middlewares properly! Obviously still utilize helmet and cors!
+//Make sure to utilize the following here! 
+app.use('/', express.static(path.join(process.cwd, 'public')));
+//For this utility to work properly the app.listen() call must be saved to variable named listen in camelCasing aka lowercase cause its one word!!
+const listen = app.listen(3001);
+// Please include this at the end of your server.js setup!
+//This is required as well!
+process.child.on(GLOBALLY.getGlobalString(), ()=>{
+    const fs = require('node:fs');
+    console.log('Shutting down Server from parent before timeout!');
+    app.removeAllListeners();
+    listen.closeAllConnections();
+    listen.close();
+    setTimeout(() =>{
+        console.log('Shutting Down Server from parent message to stop after timeout!');
+    },10);
+});
+//I Really hope this utility helps Protect Application and Web Servers here in the future for streamline development process and production release!
+//With a nice safety net design principle which utilizes the fact the merkle verification upon failure literally Denies
+//The express app any requests prevents a modified malicious server from being able to execute the payload potentially!
+//Solving alot of todays issues with express servers in nodeJS runetime and maybe might shed light on how they can convert this over to solve it in other applications and softwares!
+```
+
+### Step 4
+
+- Inside the Godbox-example folder still
+- make a index.js file and put this code inside it!
+
+```js
+const { GodBox } = require('./index.js');
+const fs = require('node:fs');
+try {
+new GodBox('./server.js', './test/public', 60000, 1000, false, true, false, {log: console.log});
+}catch(err){
+ console.log(err);
+}
+
+```
+
+### Step 5
+
+- Start it all up now and enjoy!
+- Execute this in terminal!
+
+```node
+node index.js
+```
+
+### Step 6
+
+- Enjoy Peace of Mind with More Secure Express and NodeJs applications from potential Runtime Injections via Code/Memory along with potential Malware payload prevention using File Verification setup with express middelware to prevent access upon tampered files!!
+
 ## Examples
 
 - Newest Setup Style the one Below will be updated with the following!
@@ -49,6 +150,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Support UR
 - Setup
 - [NPM Site](https://www.npmjs.com/package/godbox)
 - server doesnt have console logs but merkle process does!
+- npm install godbox
 
 ```js
 const { GodBox } = require('godbox');
@@ -74,6 +176,7 @@ const test = new GodBox('./server.js', './test/public', 120000, 30000, false, fa
 - Setup
 - [NPM Site](https://www.npmjs.com/package/godbox)
 - offers console logs on server side!
+- npm install godbox
 
 ```js
 const { GodBox } = require('godbox');
@@ -119,8 +222,6 @@ process.child.on(GLOBALLY.getGlobalString(), ()=>{
         console.log('Shutting Down Server from parent message to stop after timeout!');
     },10);
 });
-
-
 //I Really hope this utility helps Protect Application and Web Servers here in the future for streamline development process and production release!
 //With a nice safety net design principle which utilizes the fact the merkle verification upon failure literally Denies
 //The express app any requests prevents a modified malicious server from being able to execute the payload potentially!
@@ -172,3 +273,5 @@ Very good success averaging 150% cpu usage now if i get this down to a average o
 ### Finished completed
 
 - Cpu usage on average is about 7% to 12% on acer chromebook 315
+- Finalized Middleware design structure for pandorasWall with express! August 25, 2024 Johnathan Edward Brown
+- Middleware Design pattern for express servers to block access upon tamper detection!
