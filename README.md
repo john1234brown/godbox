@@ -53,7 +53,39 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Support UR
 
 - Due to the Potential of it conflicting with the sole purpose of being a fail safe process for your webserver is really what this utility is utilizing merkle tree verification techniques in private function in a class setup to properly keep out of context!
 
-## How To Use
+## How To Use CLI
+
+### Step 1
+
+- Make sure you have NodeJs installed we recommend version 19.8.0 and up to prevent possible race condition attacks!
+- Open up a terminal and run this command! npm install godbox -g
+
+```sh
+npm install godbox -g
+```
+
+- Then try out the command godbox --help
+
+```sh
+godbox --help
+```
+
+### Step 2
+
+- Navigate in the terminal to your folder where your webserver wherever your index.js for your webserver is!
+- Also please note you must have your index.html files in a public folder setup like regular express.static files would be!
+- try running this
+
+```sh
+godbox --file ./index.js --dir /public
+```
+
+### Step 3
+
+- I Hope you Enjoy peace of mind and security with the Godbox knowing your NodeJS express servers runtime Memory and Server Code is secured thanks to GodBOX!!!
+- Enjoy for now will be updating this later on with more details on more advanced usages of this amazing utility!
+
+## How To Use Module
 
 ### Step 1
 
@@ -147,7 +179,7 @@ node index.js
 
 - Enjoy Peace of Mind with More Secure Express and NodeJs applications from potential Runtime Injections via Code/Memory along with potential Malware payload prevention using File Verification setup with express middelware to prevent access upon tampered files!!
 
-## Examples
+## Examples Modules
 
 - Newest Setup Style the one Below will be updated with the following!
 - *production mode*
@@ -235,6 +267,13 @@ process.child.on(GLOBALLY.getGlobalString(), ()=>{
 - [Here is the link click to check out the example!](https://github.com/john1234brown/godbox/tree/example)
 - Will be releasing core pandorasWall design code! Which was made for helping to protect this GodBox module!
 - And Will Be Released as its own module here Soon!
+
+## Credits Links and References
+
+- https://github.com/vampeyer <- My Mentor
+- https://nodejs.org/api/fs.html#fsopenasblobpath-options // For Optimizations of Hashing Method!
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties //For Secure Proper utility Setup!
+- https://chatgpt.com/share/cbc32ac2-41ea-4333-8600-392f3ddbef2c // For helping me setup a starter template for how to setup my cli!
 
 ## Background Story
 

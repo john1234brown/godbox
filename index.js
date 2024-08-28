@@ -1,5 +1,8 @@
 // The God AKA Pheonix Box a Gift From God and a Pheonix With Some Root Hash Verification of a Isolated Container! For Express Static Webservers And NodeJS Applications!
 // Author: Johnathan Edward Brown August 24, 2024
+// Last Updated Johnathan Edward Brown August 27, 2024
+// Includes Command Line Interface Now!
+// Mentor: Vampeyer // https://github.com/Vampeyer //
 // License: GPL-3.0
 console.log('The God Box Simple Isolated Webserver Hosting Module In NodeJS!');
 console.log('Prevent Path Traversal Exploits');
@@ -9,7 +12,6 @@ console.log('Finalized Runtime Express Protection Middleware!');
 console.log('Dual Express Protection Middleware Design Runtime/Physical File Protection');
 console.log('Author: Johnathan Edward Brown, Mentor: Vampeyer');
 console.log('I Hope you Enjoy My Nice Application Layer Security Tool For Express!');
-console.log('Warning!! Its Advised to atleast use nodeJs 19.8.0 and up due to the fact of race condition attacks!');
 var fs = require('node:fs');
 //Source Code GodBox Class!
 class GodBox {
@@ -66,6 +68,8 @@ class GodBox {
       fsMiddleware,
       consoleOverride = {
         log: console.log,
+        time: console.time,
+        timeEnd: console.timeEnd,
         error: console.error
       },
       fsOverride = {
@@ -1303,7 +1307,7 @@ new PandorasWallSource(this);
 
                 for (const file of files) {
                   const filePath = `${folderPath}/${file}`;
-                  currentFile = filePath;
+                  currentPath = filePath;
                   const stat = await statAsync(filePath);
             
                   if (stat.isDirectory()) {
