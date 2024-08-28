@@ -2,11 +2,23 @@
 
 ## Videos
 
+### Screencast
+
+- [Version 1.1.6 August 28, 2024 Command Line Interface Finalized for basic use But More To Come.. For Advanced Usage!](https://screencast.apps.chrome/1ZUMH_Fy40Q5N0g3BPfFdA4xgKp9gAogl?createdTime=2024-08-28T06%3A52%3A59.275Z)
 - [Pre release Version 1.1.4 August 27, 2024 Command Line Interface Intro](https://screencast.apps.chrome/1YxPv9twCRnTO-qdLVrpM3w5QVaRZX3rq?createdTime=2024-08-28T06%3A15%3A47.699Z)
 - [Benchmark Run and Tests New Optimizations 1.0.7 August 25, 2024](https://screencast.apps.chrome/1XSnJ0kfhdTFx-E9mqHdruH_vHsqHvgCa?createdTime=2024-08-25T20%3A17%3A26.124Z);
 - [Introduction Bare With me I'm not the best Presentor practices makes perfect though..](https://screencast.apps.chrome/1Xp_kxLh6Imv7m0uYv1miatwW-oi_W_FP?createdTime=2024-08-25T20%3A26%3A26.131Z)
 - [New Release version 1.0.9 August 26, 2024](https://screencast.apps.chrome/1YI3-UKIyZoJMF-duni3YwwfsyzrhU-d0?createdTime=2024-08-26T06%3A04%3A15.204Z)
 - [Video Showcasing Webserver Exposed From Godbox Setup!](https://screencast.apps.chrome/1YJlVrpiFboQWF-GFZeO7ldFPtH9YONKS?createdTime=2024-08-26T06%3A23%3A46.087Z)
+
+### Youtube
+- [Version 1.1.6 August 28, 2024 Command Line Interface Finalized for basic use But More To Come.. For Advanced Usage!](https://youtu.be/Y6QaChw2wQ4)
+- [Pre release Version 1.1.4 August 27, 2024 Command Line Interface Intro](https://youtu.be/wC8wUFWDoWE)
+- [Benchmark Run and Tests New Optimizations 1.0.7 August 25, 2024](https://youtu.be/52Dhz7XQ9IU);
+- [Introduction Bare With me I'm not the best Presentor practices makes perfect though..](https://youtu.be/9rfkuVPjR6I)
+- [New Release version 1.0.9 August 26, 2024](https://youtu.be/VuFUBQbfXac)
+- [Video Showcasing Webserver Exposed From Godbox Setup!](https://youtu.be/nYbuZqrxiE4)
+
 
 **Warning Godbox-dev is now deprecated this godbox utility has it all in one design pattern solution now!**
 **For Seperate environment modes such as production and development modes!**
