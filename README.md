@@ -78,7 +78,7 @@ process.child.on(GLOBALLY.getGlobalString(), ()=>{
 - make a index.js file and put this code inside it!
 
 ```js
-const { GodBox } = require('./index.js');
+const { GodBox } = require('godbox');
 const fs = require('node:fs');
 try {
 new GodBox('./server.js', './test/public', 60000, 1000, false, true, false, {log: console.log});
