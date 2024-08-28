@@ -12,10 +12,14 @@
 
 - The isolated VM Express Webserver hosting solution for nodeJS.
 - This utilizes Javascript-Obfuscator to obfuscate your server code before executing it in the vm context of nodeJs.
+- This utilizes the Babel/parser module as well to achieve its goal!
 - This utilizes a VM Context and A Child Process with its own environment variables Setup!
+- Child Process comes with its own process memory check, and code running in runetime checks! on 1 second interval!
+- This Now Includes Real Time File Verification checks!!! With less then .8ms response time with node modules scanned in node 19.8.0 and higher!
+- Warning: 19.8.0 below this version doesn't offer full realTimeProtection for File Merkle verification!
 - This Utilizes a Recreation tactic like how a pheonix dies and rebirths itself very similar thing here utilizings a merkle tree verification setup!
 - So when Something is found wrong with the server files it will stop it and restart it! And Properly Resetup the files and remove the infected directory!
-- This is why i want to include the simple path traversal exploit protection thus would allow for pure webserver setup in a secure manner! And Help streamlining setup for developers!
+- Path Traversal Protection for Express middleware protection finished implementing!
 - Will work on example codes here soon But I have done some tests so far and will be uploading to the this Github repository.
 
 ## What is our purpose
@@ -57,7 +61,6 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Support UR
 - Make folder called Godbox-example
 - cd into godbox-example
 - run npm init -y
-- npm install godbox
 
 ### Step 2
 
@@ -121,7 +124,7 @@ process.child.on(GLOBALLY.getGlobalString(), ()=>{
 - make a index.js file and put this code inside it!
 
 ```js
-const { GodBox } = require('godbox');
+const { GodBox } = require('./index.js');
 const fs = require('node:fs');
 try {
 new GodBox('./server.js', './test/public', 60000, 1000, false, true, false, {log: console.log});

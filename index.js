@@ -9,11 +9,15 @@ console.log('Finalized Runtime Express Protection Middleware!');
 console.log('Dual Express Protection Middleware Design Runtime/Physical File Protection');
 console.log('Author: Johnathan Edward Brown, Mentor: Vampeyer');
 console.log('I Hope you Enjoy My Nice Application Layer Security Tool For Express!');
+console.log('Warning!! Its Advised to atleast use nodeJs 19.8.0 and up due to the fact of race condition attacks!');
 var fs = require('node:fs');
 //Source Code GodBox Class!
 class GodBox {
     /*  Provides Server File = String, Server Folder =  String, number = interval
     */
+    #fsMiddleware
+    #consoleOverride
+    #fsOverride
     #devMode
     #serverFile
     #serverFolder
@@ -34,6 +38,7 @@ class GodBox {
     #TheProtectorO
     #TimeOut
     #cwd
+    #TrueSalt
     #TrueAnswer
     #TrueAnswerLock
     fileList
@@ -47,7 +52,7 @@ class GodBox {
     * @param {boolean} useEnv - Are you using dotenv? true or false = yes or no! Defaults to false
     * @param {boolean} devMode - If using Development mode and want console logs set to true by default false!
     * @param {boolean} fsMiddleware - Utilize middleware on fs to contain the sandbox process! to the folder it is in! Defaults to true!
-    * @param {object} console - Set Console up for process! example { log: console.log(), error: console.erro() } defaults to this example!
+    * @param {object} consoleOverride - Set Console up for process! example { log: console.log(), error: console.erro() } defaults to this example!
     * @param {object} fsOverride - Limit The Nodes:FS Module capabilites And functions! Example: { readSync: fs.readSync(), writeSync: fs.writeSync() } Defaults to allow promises and sync of read, write, rm, cp
     * 
     */
@@ -85,6 +90,7 @@ class GodBox {
         }
       }
       ){
+        const crypto = require('node:crypto');
         const path = require('node:path');
         this.#cwd = process.cwd();
         this.#breakValue = true;
@@ -100,8 +106,12 @@ class GodBox {
         //Thus if we also include a obfuscation method for childProcess code to be ran as well! then we properly Help shield where the fs module is in runtime from public endpoint side!
         //This helps to ensure ones server files and folders can't be modified due to this backdoor! of being able to pinpoint the fs module in server through public endpoint!
         fs = fsOverride;
+        this.#fsOverride = fsOverride;
+        this.#fsMiddleware = fsMiddleware;
+
         //Here we intercept consoles values properly to prevent using other console access to bypass the middleware setup!
         console = consoleOverride;
+        this.#consoleOverride = consoleOverride;
         // Modified console.log function that only logs if devMode is true
         console.log = (...args) => {
           if (devMode) {
@@ -132,6 +142,7 @@ class GodBox {
         this.#useEnv = useEnv;
         this.#TheBox = this;
         this.#TrueAnswerLock = 0;
+        this.#TrueSalt = crypto.randomBytes(32);
         this.#runInVM(fs.readFileSync(path.join(process.cwd(), serverFile)), fs);
         // Create the file with restricted permissions
         //fs.writeFileSync(tempFilePath, code, { mode: 0o600 });
@@ -335,7 +346,7 @@ class GodBox {
           await this.#generateNewChild();
           this.#child = this.#createCustomFork();
           console.log('New Child: ', this.#child.killed, this.#childcwd);
-          this.#TheProtectorO = this.#TheProtectorF(this.#serverFile, this.#serverFolder, this.#interval, this.#merkleInterval, this.#useEnv, this.#childcwd, this.#TheBox);
+          this.#TheProtectorO = this.#TheProtectorF(this.#serverFile, this.#serverFolder, this.#interval, this.#merkleInterval, this.#useEnv, this.#devMode, this.#fsMiddleware, this.#consoleOverride, this.#fsOverride, this.#childcwd, this.#TheBox);
           const GLOBALLY = this.#generateGlobal(this.#TheProtectorO);
           this.#GlobalReference = GLOBALLY;
           this.#TheProtectorO.setGlobal(this.#GlobalReference);
@@ -1024,7 +1035,7 @@ new PandorasWallSource(this);
 
     //Author: Johnathan Edward Brown, August 19, 2024
     //The Merkle Verification Protector Class Object for Merkle verifying the Server!
-    #TheProtectorF(serverFile, serverFolder, interval, merkleInterval, useEnv, childCWD, theBox){
+    #TheProtectorF(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride, childCWD, theBox){
         //We will spawn our own Seperate child process that is unref to be able to rewrite files to the directory! and reset back to original!
         class TheProtectorC{
             #childcwd
@@ -1048,7 +1059,7 @@ new PandorasWallSource(this);
             #JBGlobal
             #executor
 
-            constructor(serverFile, serverFolder, interval, merkleInterval, useEnv, childCWD, theBox){
+            constructor(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride, childCWD, theBox){
               const path = require('node:path');
               this.#cwd = process.cwd();
               this.#serverFile = serverFile;
@@ -1077,6 +1088,10 @@ new PandorasWallSource(this);
               this.#setup(serverFile, serverFolder, interval, useEnv);
             }
 
+            getLock3(){
+              return this.#lock3;
+            }
+
             //Further optimized August 25, 2024 By Johnathan Edward Brown utilizing a lock setup! to do one time merkle setup for trueMerkle answer will majorly reduce!
             //CPU Overhead when the Protector Gets Restarted by containing the TrueAnswer in the GodBox itself for persistant usage!
             //Also removes race condtion exploits due to repetitive recursive usages!
@@ -1095,12 +1110,14 @@ new PandorasWallSource(this);
               const v2 = parseInt(verionList[1]);
               console.log(verionList, v1, v2);
 
+              function restart(){
+                this.#theBox.restart(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride)
+              }
+
               console.time('Timer');
                 if (this.#theBox.#TrueAnswerLock === 0 && this.#lock === false && this.#loopBreak === false){
                 this.#lock = true;
                 console.log('Setting up File Merkle Security!');
-//                this.#theBox.fileList = await this.#readFilesRecursively(process.cwd());
-//                this.#theBox.execList = await this.#readFilesRecursively(this.#childcwd);
                 if ((v1 === 19 && v2 >= 8) || v1>=20){
                   console.log('Node Version higher then 19.8.0 detected!');
                   this.#theBox.#TrueAnswer = await this.#hashFolderContentsNodeV22(process.cwd());
@@ -1114,11 +1131,12 @@ new PandorasWallSource(this);
                 if (this.#loops <= 0){
                 this.#loops = this.#loops+1;
                 this.#timeOut = setInterval(async () =>{
-                  console.log('File Merkle interval Started!');
+                  console.log('File Merkle interval Started! Time Out Interval: 1');
                   try {
                     if (this.#theBox.#TrueAnswer && this.#loopBreak === true && this.#lock === false){
                       this.#lock = true;
                       console.log('Starting File calculations!');
+                      console.time('Timer');
                       if ((v1 === 19 && v2 >= 8) || v1>=20){
                         this.#answer = await this.#hashFolderContentsNodeV22(this.#childcwd);
                         }else{
@@ -1130,9 +1148,10 @@ new PandorasWallSource(this);
                       }else if(this.#answer.firstHash !== this.#theBox.#TrueAnswer.firstHash){
                         this.MerkleVerified = 2;
                         console.log('File Merkle Invalid warning restarting!');
-                        this.#theBox.restart(serverFile, serverFolder, interval, useEnv);
+                        this.#theBox.restart(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride);
                       }
                       this.#lock = false;
+                      console.timeEnd('Timer');
                     }else if(this.#loopBreak === false){
                         console.log('File Merkle Loop Is Breaking! If Server is not restarting please be warned malicious activity may be noticed!');
                         this.#loops = this.#loops - 1;
@@ -1149,6 +1168,12 @@ new PandorasWallSource(this);
                     }
                   }catch(err){
                       console.log('Err:', err);
+                      console.log('File Merkle Invalid warning restarting! First Statement!');
+                      this.MerkleVerified = 2;
+                      console.log(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride, childCWD, theBox, this);
+                      this.#theBox.restart(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride);
+                      this.#lock = false;
+                      return;
                   }
                 }, merkleInterval);
                 this.#lock = false;
@@ -1160,7 +1185,7 @@ new PandorasWallSource(this);
                   this.#loopBreak = true;
                   this.#loops = this.#loops+1;
                   this.#timeOut = setInterval(async () =>{
-                    console.log('File Merkle interval Started!');
+                    console.log('File Merkle interval Started! Timeout Interval: 2');
                     try {
                       if (this.#theBox.#TrueAnswer && this.#loopBreak === true && this.#lock === false){
                         this.#lock = true;
@@ -1176,7 +1201,7 @@ new PandorasWallSource(this);
                         }else if(this.#answer.firstHash !== this.#theBox.#TrueAnswer.firstHash){
                           this.MerkleVerified = 2;
                           console.log('File Merkle Invalid warning restarting!');
-                          this.#theBox.restart(this.#serverFile, this.#serverFolder, this.#interval, this.#useEnv);
+                          this.#theBox.restart(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride);
                         }
                         this.#lock = false;
                       }else if(this.#loopBreak === false){
@@ -1195,6 +1220,10 @@ new PandorasWallSource(this);
                       }
                     }catch(err){
                         console.log('Err:', err);
+                        console.log('File Merkle Invalid warning restarting!');
+                        console.log(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride, childCWD, theBox);
+                        this.#theBox.restart(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride);
+                        this.#lock = false;
                     }
                   }, merkleInterval);
                   this.#lock = false;
@@ -1208,7 +1237,11 @@ new PandorasWallSource(this);
             }
             
             //Pretty neat concept to cut down on usage of cpu!
-            async #hashFolderContents(folderPath) {
+            //Updated To utilize Real Time Detection setups!
+            //Updated August 27, 2024 By Johnathan Edward Brown!
+            //Sadly Realtime Exact File Modification Couldn't Be implemented but we have a optimized layout thats still secure for Older NodeJS runtimes!
+            //Which is still equivalent to Realtime just a 1 second delay technically!
+            async #hashFolderContents(folderPath, hashList = []) {
               const crypto = require('crypto');
               const fs = require('fs');
               const statAsync = fs.promises.stat;
@@ -1216,59 +1249,104 @@ new PandorasWallSource(this);
               const readFileAsync = fs.promises.readFile;
 
               const hash = crypto.createHash('sha256');
-            
+              var currentPath;
               try {
                 const files = await readdirAsync(folderPath);
-            
                 for (const file of files) {
                   const filePath = `${folderPath}/${file}`;
+                  currentPath = filePath;
                   const stat = await statAsync(filePath);
             
                   if (stat.isDirectory()) {
-                    hash.update(await this.#hashFolderContents(filePath));
+                    const directory = await this.#hashFolderContents(filePath, hashList);
+                    hash.update(directory.firstHash);
+                    hashList.push(directory.secondHash);
                   } else {
-                    hash.update(await readFileAsync(filePath));
+                    const fileHex = (await fs.promises.readFile(filePath));
+                    const obj = {
+                      name: file,
+                      hash: fileHex
+                    }
+                    hashList.push(obj);
+                    //Author Johnathan Edward Brown August 27, 2024
+                    //Sadly for older node versions lower then 19.8.0 WE Sadly Do Not Offer RealTime Detection Protection!
+                    hash.update(fileHex);
                   }
                 }
-                
-                const answer = hash.digest('hex');
-                return answer;
+                const newAnswer = {
+                  firstHash: hash.digest('hex'),
+                  secondHash: hashList
+                }
+                return newAnswer;
               } catch (err) {
                 console.error('Error hashing folder contents:', err);
+                console.log('Warning following File is Mismatched!', currentPath, 'Fs module couldnt Read file it must have been tampered with! Burning and restarting!');
                 return null;
               }
             }
 
-
             //Author Johnathan Edward Brown August 26, 2024
             //Pretty neat concept to cut down on usage of cpu! Along with FileSystem Reads! Due To The nature of Opening a file as blob doesnt Require as much of a deep cycle read!
             //And Solve Race Condition issues In Merkle Or File Verification Systems or setups in NodeJS using a Newer NodeJS function available only to 19.8.0 and up!
-            async #hashFolderContentsNodeV22(folderPath) {
+            //Updated August 27, 2024 by Johnathan Edward Brown
+            async #hashFolderContentsNodeV22(folderPath, hashList = []) {
               const crypto = require('crypto');
               const fs = require('fs');
               const statAsync = fs.promises.stat;
               const readdirAsync =  fs.promises.readdir;
-//              const readFileAsync = fs.promises.readFile;
 
               const hash = crypto.createHash('sha256');
-            
+              var currentPath;
+
               try {
                 const files = await readdirAsync(folderPath);
-            
+
                 for (const file of files) {
                   const filePath = `${folderPath}/${file}`;
+                  currentFile = filePath;
                   const stat = await statAsync(filePath);
             
                   if (stat.isDirectory()) {
-                    hash.update(await this.#hashFolderContentsNodeV22(filePath));
+                    const directory = await this.#hashFolderContentsNodeV22(filePath, hashList);
+                    hash.update(directory.firstHash);
+                    hashList.push(directory.secondHash);
                   } else {
-                    hash.update(((await fs.openAsBlob(filePath)).arrayBuffer.toString('hex')));
+                    //See In the Newer NodeJS runtime we dont need to ReHash we can just utilize the direct arrayBuffer toString('hex'); 
+                    //Thus alot more optimized and way better real Time Detection setup!
+                    const Blob2 =  await fs.openAsBlob(filePath);
+                    const obj = {
+                      name: file,
+                      hash: Blob2.toString('hex')
+                    }
+                    //Author Johnathan Edward Brown August 27, 2024
+                    //Think of this as a Immediate For Loop break setup! To Fail verification and cut down on delay of cut off signal!
+                    if (this.#theBox.#TrueAnswerLock === 1){//Here I setup and utilize our existing trueAnswerLock value to know if I need to handle this as the testing search! If so I need to help potentially 
+                      //Real time detection verify by including a safety net to reduce wasted cpu call to truly allevaite wasted time and delay in detections which can produce more real time detection system!
+                      const object = this.#theBox.#TrueAnswer.secondHash.find((value) =>{if(value.name === file) return value;});
+                      if (object){
+                      //console.log('Verifiy File', file, 'Integrity!');
+                      if(object.name === file && object.hash !== obj.hash){
+                        console.log('Warning The following file integrity is at risk!', file, 'Mismatched hashes, Expected Hash:', object.hash, 'Got hash:', obj.hash);
+                        return null;
+                      }
+                      }
+                    }
+
+                    hashList.push(obj);
+                    const Blob =  await fs.openAsBlob(filePath);
+                    //console.log('Testing Opening As Blob:', Blob.toString('hex'));
+                    hash.update(Blob.toString('hex'));
                   }
                 }
-                
-                const answer = hash.digest('hex');
-                return answer;
+                //Optimized for better usage and faster real time detections!
+                //Author Johnathan Edward Brown August 27, 2024 With Proper For Loop Breaking, To Produce Immediate Real Time Detection Setup!
+                const newAnswer = {
+                  firstHash: hash.digest('hex'),
+                  secondHash: hashList
+                }
+                return newAnswer;
               } catch (err) {
+                console.log('Warning following File is Mismatched!', currentPath, 'Blob couldnt Read file it must have been tampered with');
                 console.error('Error hashing folder contents:', err);
                 return null;
               }
@@ -1330,7 +1408,11 @@ new PandorasWallSource(this);
                       const filePath = path.join(file);
                       if (fs.statSync(filePath).isFile()) {
                         const fileHash = await calculateHash(filePath);
-                        fileHashes.push(fileHash);
+                        const obj = {
+                          name: file,
+                          hash: fileHash
+                        }
+                        fileHashes.push(obj);
                       }
                       }catch(err){
                         console.log('Failed Calculating Hash For:', file,'Had An Error:', err);
@@ -1376,7 +1458,7 @@ new PandorasWallSource(this);
             }
 
         }
-        return new TheProtectorC(serverFile, serverFolder, interval, merkleInterval, useEnv, childCWD, theBox);
+        return new TheProtectorC(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride, childCWD, theBox);
     }
 
     terminate(){
@@ -1389,12 +1471,12 @@ new PandorasWallSource(this);
         clearTimeout(this.#timeOut);
     }
 
-    restart(serverFile, serverFolder, interval, useEnv){
-        if (this.#TheProtectorO.getLock3 === false){
-        console.log('Restarting with:', serverFile, serverFolder, interval, useEnv);
+    restart(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride){
+        if (this.#TheProtectorO.getLock3() === false){
+        console.log('Restarting with:', serverFile, serverFolder, interval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride);
         this.terminate();
         delete this;
-        return new GodBox(serverFile, serverFolder, interval, useEnv);
+        return new GodBox(serverFile, serverFolder, interval, merkleInterval, useEnv, devMode, fsMiddleware, consoleOverride, fsOverride);
         }
     }
     /***
