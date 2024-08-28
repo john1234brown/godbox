@@ -2,6 +2,7 @@
 
 ## Videos
 
+- [Pre release Version 1.1.4 August 27, 2024 Command Line Interface Intro](https://screencast.apps.chrome/1YxPv9twCRnTO-qdLVrpM3w5QVaRZX3rq?createdTime=2024-08-28T06%3A15%3A47.699Z)
 - [Benchmark Run and Tests New Optimizations 1.0.7 August 25, 2024](https://screencast.apps.chrome/1XSnJ0kfhdTFx-E9mqHdruH_vHsqHvgCa?createdTime=2024-08-25T20%3A17%3A26.124Z);
 - [Introduction Bare With me I'm not the best Presentor practices makes perfect though..](https://screencast.apps.chrome/1Xp_kxLh6Imv7m0uYv1miatwW-oi_W_FP?createdTime=2024-08-25T20%3A26%3A26.131Z)
 - [New Release version 1.0.9 August 26, 2024](https://screencast.apps.chrome/1YI3-UKIyZoJMF-duni3YwwfsyzrhU-d0?createdTime=2024-08-26T06%3A04%3A15.204Z)
@@ -13,6 +14,7 @@
 - The isolated VM Express Webserver hosting solution for nodeJS.
 - This utilizes Javascript-Obfuscator to obfuscate your server code before executing it in the vm context of nodeJs.
 - This utilizes the Babel/parser module as well to achieve its goal!
+- This utilizes recast to AST Traverse walk!
 - This utilizes a VM Context and A Child Process with its own environment variables Setup!
 - Child Process comes with its own process memory check, and code running in runetime checks! on 1 second interval!
 - This Now Includes Real Time File Verification checks!!! With less then .8ms response time with node modules scanned in node 19.8.0 and higher!

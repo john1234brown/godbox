@@ -1,6 +1,6 @@
 {
   "name": "godbox",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "Johnnykins GodBox Simple Isolation and Path Traversal Protection Express Server Hosting Module! With Merkle Tree Verification System! And Merkle Root Verification! Along With Runtime Memory And Code Protection!",
   "main": "index.js",
   "bin": {
@@ -15,12 +15,16 @@
     "Express",
     "Security",
     "Merkle Tree File Verification",
-    "NodeJS Runtime Memory/Code Security"
+    "NodeJS Runtime Memory/Code Security",
+    "@babel/parser",
+    "recast"
   ],
   "author": "Johnathan Edward Brown",
   "license": "GPL-3.0",
   "dependencies": {
+    "@babel/parser": "^7.25.4",
     "express": "^4.19.2",
-    "javascript-obfuscator": "^4.1.1"
+    "javascript-obfuscator": "^4.1.1",
+    "recast": "^0.23.9"
   }
 }
