@@ -38,7 +38,7 @@
 
 ## What is our purpose
 
-Well with the growing hacking issues in todays technologies, specifically the application layer of nodeJS and the express runtime! There tends to be issues when making express apps using just helmet, cors setups one can still run the risk of accidental backdoors in there applications as they develop!
+Well with the growing hacking issues in todays technologies, specifically the application layer of nodeJS and the express runtime! There tends to be issues when making express apps using just helmet, cors setups, and even a typescript environment one can still run the risk of accidental backdoors in there applications as they develop such as the runetime layer!
 So I have decided to help streamline developers today with my utility package I really hope this helps add and secure those in mind!
 
 - We offer basic Request Header Size limit setting for protecting headers of requests!! <-Coming Soon!
