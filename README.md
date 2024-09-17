@@ -1,5 +1,9 @@
 # JohnnyKins-GodBox Also Could be named Pheonix Box
 
+# Notes September 17, 2024
+- After Coming Up with a simpler method then needing to hash for string comparison ive realized we could take advantage of taking the objects and rather using a really intensive hash function like Sha256 or even lightweight ones we could take advantage of
+- The Buffer.from(Object).toString('hex'); In the nodeJs which could give us a hex string to use for comparison and detection of changes! Which could actually help further prevent Race Condition Attacks due to the Decreased CPU Consumption using a Buffer.from style setup rather then using a mildly intensive cpu hashing algorithm or even substituting the lightweight hashing algorithms still I had cpu usages of 7% and such so I Will be working on a Buffer.from().toString('hex'); method style design pattern rather then using this Here Design Structure which could pose a Meltdown attack vector some would say....
+
 ## Videos
 
 ### Screencast
