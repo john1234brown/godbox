@@ -1,4 +1,4 @@
-# JohnnyKins-GodBox Also Could be named Pheonix Box
+# JohnnyKins-GodBox Also my inspiration for my Pheonix Box
 
 ## Notes September 17, 2024
 After Coming Up with a simpler method then needing to hash for string comparison ive realized we could take advantage of taking the objects and rather than using a really intensive hash function like Sha256 or even lightweight ones like cityHash we could use... Super Simple Gonna Laugh I know!!!
